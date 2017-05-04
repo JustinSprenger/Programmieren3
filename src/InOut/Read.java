@@ -4,55 +4,81 @@ import java.util.Scanner;
 
 public class Read {
 	Scanner sc = new Scanner(System.in);
+	
 	Read(){
 		
 	}
+	
+	/**
+	 * 
+	 * @return Integer
+	 */
 	public int readInt(){
-		String s;
-		int z=0;
-		boolean w=true;
+		String s="";
+		int zahl=0;
+		boolean wieder=true;
 		do{
 			s = sc.next();
 			try {
-				z = Integer.parseInt(s);
-				w = true;
+				zahl = Integer.parseInt(s);
+				wieder = true;
 			} catch (Exception e) {
 				System.out.println("Bitte geben Sie eine ganze Zahl ein!!!");
-				w = false;
+				wieder = false;
 			}
-		}while(w==false);
-		return z;
+		}while(wieder==false);
+		return zahl;
 	}
+	
+	/**
+	 * 
+	 * @return Double
+	 */
 	public double readDouble(){
-		String s;
-		double z=0;
-		boolean w=true;
+		String s="";
+		double zahl=0;
+		boolean wieder=true;
 		do{
 			s = sc.next();
 			try {
-				z = Double.parseDouble(s);
-				w = true;
+				zahl = Double.parseDouble(s);
+				wieder = true;
 			} catch (Exception e) {
 				System.out.println("Bitte geben Sie eine Zahl ein!!!");
-				w = false;
+				wieder = false;
 			}
-		}while(w==false);
-		return z;
+		}while(wieder==false);
+		return zahl;
 	}
+	
+	/**
+	 * 
+	 * @return Char
+	 */
 	public char readChar(){
-		String s;
+		String s="";
 		char c=' ';
-		boolean w=true;
+		boolean wieder=true;
 		do{
 			s = sc.next();
 			try {
 				c = s.charAt(0);
-				w = true;
+				wieder = true;
 			} catch (Exception e) {
 				System.out.println("Bitte geben Sie einen Buchstaben ein!!!");
-				w = false;
+				wieder = false;
 			}
-		}while(w==false);
+		}while(wieder==false);
 		return c;
+	}
+	
+	/**
+	 * 
+	 * @return String
+	 */
+	public String readString(){
+		String s="";
+		s = sc.next();
+		return s;
 	}
 }
