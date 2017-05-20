@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -67,7 +68,6 @@ public class TextEditor extends Application {
 		    }	
 		    });
 	        
-<<<<<<< 66ebef90a00ed3009f32f320046a31041ec506cb
 	        menuClose.showingProperty().addListener((observable, oldValue, newValue) -> {
 			    	if (observable.getValue()) {
 			    	System.exit(0);
@@ -78,7 +78,7 @@ public class TextEditor extends Application {
 	        menuSearch.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override 
 			    public void handle(ActionEvent e) {
-			    	popupdia(primaryStage);
+			    	popupSearch();
 			    }
 			        	
 			    });
@@ -86,21 +86,10 @@ public class TextEditor extends Application {
 	        menuReplace.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override 
 			    public void handle(ActionEvent e) {
-			    	openFile();
+			    	popupReplace();
 			    }
 			        	
 			    });
-		
-=======
-	        menuView.setOnAction(new EventHandler<ActionEvent>() {
-				
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("test");
-				System.exit(0);
-			}
-			});
->>>>>>> -update
 	        
 	        menuFileItemNew.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
 	        menuFileItemSaveAs.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
@@ -135,10 +124,55 @@ public class TextEditor extends Application {
 		System.out.println("Datei ÷ffnen");
 	}
 	
-	private void popupdia(Stage pStage){
+	private void popupSearch(){
 		Stage pop = new Stage();
 		pop.initModality(Modality.APPLICATION_MODAL);
-		pop.initOwner(pStage);
+		pop.initOwner(primarystage);
+		
+		TextField search = new TextField();
+		TextField replace = new TextField();
+		Button sbutton = new Button("Suche");
+		Button ebutton = new Button("ersetzen");
+		CheckBox lowCase = new CheckBox("Groﬂ/Kleinschreibung beachten");
+		
+		FlowPane flpane = new FlowPane();
+		FlowPane flpane2 = new FlowPane();
+		VBox vbox = new VBox(1);
+		//flpane.set(search, Priority.ALWAYS);
+		flpane.getChildren().addAll(search,sbutton);
+		flpane2.getChildren().addAll(replace,ebutton);
+		vbox.getChildren().addAll(flpane,lowCase,flpane2);
+		
+		Scene scene2 = new Scene(vbox,400,300);
+		
+		pop.setScene(scene2);
+		pop.show();
+		
+		sbutton.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				//String text=ta.replaceSelection(replacement);
+				String text=ta.getText();
+				String such=search.getText();
+				if(lowCase.isSelected()==true){
+					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+				}else{
+					if(text.contains(such)==false){
+						
+					}else{
+						ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+					}
+				}
+				
+			}
+		});
+		
+	}
+	
+	private void popupReplace(){
+		Stage pop = new Stage();
+		pop.initModality(Modality.APPLICATION_MODAL);
+		pop.initOwner(primarystage);
 		
 		TextField search = new TextField();
 		Button sbutton = new Button("Suche");
