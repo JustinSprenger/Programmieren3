@@ -1,10 +1,15 @@
 package Uebung2_12;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -94,6 +99,7 @@ public class TextEditor extends Application {
 	        menuFileItemNew.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
 	        menuFileItemSaveAs.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
 	        menuFileItemOpen.setAccelerator(KeyCombination.keyCombination("shortcut+O"));
+	        menuSearch.setAccelerator(KeyCombination.keyCombination("shortcut+F"));
 	        
 	        menuFile.getItems().add(menuFileItemNew);
 	        menuFile.getItems().add(menuFileItemOpen);
@@ -154,19 +160,46 @@ public class TextEditor extends Application {
 				//String text=ta.replaceSelection(replacement);
 				String text=ta.getText();
 				String such=search.getText();
+				String suche = "" + such.charAt(0);
+				String suchen = "";
+				for (int i = 1; i<such.length();i++){
+					suchen = suchen + such.charAt(i);
+				}
+				System.out.println(such.charAt(0)+suchen);
 				if(lowCase.isSelected()==true){
 					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
 				}else{
-					if(text.contains(such)==false){
-						
-					}else{
-						ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
-					}
+					text = text.toLowerCase();
+					such = such.toLowerCase();
+					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(such.toLowerCase()),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(such.toUpperCase()),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(suche.toLowerCase()+suchen),such.length()+text.indexOf(suche.toLowerCase()+suchen));
+					//ta.selectRange(text.indexOf(suche.toUpperCase()+suchen),such.length()+text.indexOf(suche.toUpperCase()+suchen));
 				}
 				
 			}
 		});
 		
+		ebutton.setOnAction((event) -> {
+			String wort = "";
+			wort = replace.getText();
+			if(wort != ""){
+				ta.replaceSelection(wort);		
+			}else{
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information!");
+				alert.setHeaderText("Keine Eingabe");
+				alert.setContentText("Bitte ein Wort eingeben, welches das Alte ersetzen soll!");
+				alert.showAndWait().ifPresent(rs -> {
+				    if (rs == ButtonType.OK) {
+				        System.out.println("Pressed OK.");
+				    }
+				});
+			}
+		});
+	
 	}
 	
 	private void popupReplace(){
