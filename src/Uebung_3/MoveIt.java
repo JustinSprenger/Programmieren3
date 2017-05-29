@@ -77,9 +77,33 @@ public class MoveIt extends Application {
         new AnimationTimer() { //animate all circles
             @Override
             public void handle(long now) {
+            	
                 for(MovingEllipse e:ovals){
-                    e.getEllipse().setCenterX(e.getEllipse().getCenterX()+e.getStepX());
-                    e.getEllipse().setCenterY(e.getEllipse().getCenterY()+e.getStepY());
+                	char pos='d';
+                	if(scene.getHeight() <= e.getEllipse().getCenterY()){
+                		pos = 'u';	            		
+                	}else if(scene.getWidth() <= e.getEllipse().getCenterX()){
+                		pos = 'u';	
+                	}else if(scene.getWidth() <= e.getEllipse().getCenterY()){
+                		pos = 'u';
+                	}else if(scene.getHeight() <= e.getEllipse().getCenterY()){
+                		pos = 'u';
+                	}
+                	System.out.println(e.getEllipse().getCenterY());
+                	if(pos == 'd'){
+                		e.getEllipse().setCenterX(e.getEllipse().getCenterX()+e.getStepX());
+                		e.getEllipse().setCenterY(e.getEllipse().getCenterY()+e.getStepY());
+                	}else if(pos == 'u'){
+                		e.getEllipse().setCenterX(e.getEllipse().getCenterX()-e.getStepX());
+                		e.getEllipse().setCenterY(e.getEllipse().getCenterY()-e.getStepY());
+                	}else if(pos == 'r'){
+                		e.getEllipse().setCenterX(e.getEllipse().getCenterX()+e.getStepX());
+                		e.getEllipse().setCenterY(e.getEllipse().getCenterY()-e.getStepY());
+                	}else if(pos == 'l'){
+                		e.getEllipse().setCenterX(e.getEllipse().getCenterX()-e.getStepX());
+                		e.getEllipse().setCenterY(e.getEllipse().getCenterY()+e.getStepY());
+                	}
+                    
                 }
                 try {
                     Thread.sleep(10);
