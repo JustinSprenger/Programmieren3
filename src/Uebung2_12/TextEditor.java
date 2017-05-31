@@ -1,10 +1,16 @@
 package Uebung2_12;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -67,7 +73,10 @@ public class TextEditor extends Application {
 		    }	
 		    });
 	        
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5a9ab779b5ac0d5744c5abea597df7214cbbc32d
 	        menuClose.showingProperty().addListener((observable, oldValue, newValue) -> {
 			    	if (observable.getValue()) {
 			    	System.exit(0);
@@ -78,7 +87,7 @@ public class TextEditor extends Application {
 	        menuSearch.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override 
 			    public void handle(ActionEvent e) {
-			    	popupdia(primaryStage);
+			    	popupSearch();
 			    }
 			        	
 			    });
@@ -86,14 +95,19 @@ public class TextEditor extends Application {
 	        menuReplace.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override 
 			    public void handle(ActionEvent e) {
-			    	openFile();
+			    	popupReplace();
 			    }
 			        	
 			    });
+<<<<<<< HEAD
 		
+=======
+	        
+>>>>>>> 5a9ab779b5ac0d5744c5abea597df7214cbbc32d
 	        menuFileItemNew.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
 	        menuFileItemSaveAs.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
 	        menuFileItemOpen.setAccelerator(KeyCombination.keyCombination("shortcut+O"));
+	        menuSearch.setAccelerator(KeyCombination.keyCombination("shortcut+F"));
 	        
 	        menuFile.getItems().add(menuFileItemNew);
 	        menuFile.getItems().add(menuFileItemOpen);
@@ -124,10 +138,82 @@ public class TextEditor extends Application {
 		System.out.println("Datei ÷ffnen");
 	}
 	
-	private void popupdia(Stage pStage){
+	private void popupSearch(){
 		Stage pop = new Stage();
 		pop.initModality(Modality.APPLICATION_MODAL);
-		pop.initOwner(pStage);
+		pop.initOwner(primarystage);
+		
+		TextField search = new TextField();
+		TextField replace = new TextField();
+		Button sbutton = new Button("Suche");
+		Button ebutton = new Button("ersetzen");
+		CheckBox lowCase = new CheckBox("Groﬂ/Kleinschreibung beachten");
+		
+		FlowPane flpane = new FlowPane();
+		FlowPane flpane2 = new FlowPane();
+		VBox vbox = new VBox(1);
+		//flpane.set(search, Priority.ALWAYS);
+		flpane.getChildren().addAll(search,sbutton);
+		flpane2.getChildren().addAll(replace,ebutton);
+		vbox.getChildren().addAll(flpane,lowCase,flpane2);
+		
+		Scene scene2 = new Scene(vbox,400,300);
+		
+		pop.setScene(scene2);
+		pop.show();
+		
+		sbutton.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				//String text=ta.replaceSelection(replacement);
+				String text=ta.getText();
+				String such=search.getText();
+				String suche = "" + such.charAt(0);
+				String suchen = "";
+				for (int i = 1; i<such.length();i++){
+					suchen = suchen + such.charAt(i);
+				}
+				System.out.println(such.charAt(0)+suchen);
+				if(lowCase.isSelected()==true){
+					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+				}else{
+					text = text.toLowerCase();
+					such = such.toLowerCase();
+					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(such.toLowerCase()),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(such.toUpperCase()),such.length()+text.indexOf(such));
+					//ta.selectRange(text.indexOf(suche.toLowerCase()+suchen),such.length()+text.indexOf(suche.toLowerCase()+suchen));
+					//ta.selectRange(text.indexOf(suche.toUpperCase()+suchen),such.length()+text.indexOf(suche.toUpperCase()+suchen));
+				}
+				
+			}
+		});
+		
+		ebutton.setOnAction((event) -> {
+			String wort = "";
+			wort = replace.getText();
+			if(wort != ""){
+				ta.replaceSelection(wort);		
+			}else{
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information!");
+				alert.setHeaderText("Keine Eingabe");
+				alert.setContentText("Bitte ein Wort eingeben, welches das Alte ersetzen soll!");
+				alert.showAndWait().ifPresent(rs -> {
+				    if (rs == ButtonType.OK) {
+				        System.out.println("Pressed OK.");
+				    }
+				});
+			}
+		});
+	
+	}
+	
+	private void popupReplace(){
+		Stage pop = new Stage();
+		pop.initModality(Modality.APPLICATION_MODAL);
+		pop.initOwner(primarystage);
 		
 		TextField search = new TextField();
 		Button sbutton = new Button("Suche");
