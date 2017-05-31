@@ -67,7 +67,7 @@ public class TextEditor extends Application {
 		    }	
 		    });
 	        
-<<<<<<< 66ebef90a00ed3009f32f320046a31041ec506cb
+
 	        menuClose.showingProperty().addListener((observable, oldValue, newValue) -> {
 			    	if (observable.getValue()) {
 			    	System.exit(0);
@@ -91,17 +91,6 @@ public class TextEditor extends Application {
 			        	
 			    });
 		
-=======
-	        menuView.setOnAction(new EventHandler<ActionEvent>() {
-				
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("test");
-				System.exit(0);
-			}
-			});
->>>>>>> -update
-	        
 	        menuFileItemNew.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
 	        menuFileItemSaveAs.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
 	        menuFileItemOpen.setAccelerator(KeyCombination.keyCombination("shortcut+O"));
