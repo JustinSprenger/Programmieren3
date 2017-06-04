@@ -73,7 +73,9 @@ public class Feuerwerk extends Application {
                 pane.setPrefHeight(scene.getHeight());
             }
         });
-        
+        pane.onMousePressedProperty((new event)->{
+        	
+        });
         	
         primaryStage.show();
         
