@@ -38,8 +38,8 @@ public class Feuerwerk extends Application {
         final Scene scene;
         final Pane pane;
         primaryStage.setTitle("Ellipse & AnimationTimer Example");        
-        generate(Color.RED, 100.0, 100.0, 35.0, 0.81 ,true);         //the first moving circle
-        generate(Color.GREENYELLOW, 150.0, 150.0, 17.0, 0.81 ,true); //the second moving circle
+       // generate(Color.RED, 100.0, 100.0, 35.0, 0.81 ,true);         //the first moving circle
+       // generate(Color.GREENYELLOW, 150.0, 150.0, 17.0, 0.81 ,true); //the second moving circle
         
         //create a pane for a group with all moving objects
         pane = new Pane(group); 
@@ -73,7 +73,46 @@ public class Feuerwerk extends Application {
                 pane.setPrefHeight(scene.getHeight());
             }
         });
+<<<<<<< HEAD
         pane.onMousePressedProperty((new event)->{
+=======
+        pane.setOnMousePressed(event->
+        { 
+        	int r;
+        	double dirx=0,diry=0;
+        	for(int i = 0;i<=1000;i++){
+        		r = i%4;
+        		System.out.println(r);
+        		switch (r) {
+				case 0:
+					dirx=Math.random();
+					diry=Math.random();
+					break;
+				case 1:
+					dirx=Math.random();
+					diry=Math.random()*-1;
+					break;
+				case 2:
+					dirx=Math.random()*-1;
+					diry=Math.random()*-1;
+					break;
+				case 3:
+					dirx=Math.random()*-1;
+					diry=Math.random();
+					break;
+
+				default:
+					break;
+				}
+        		
+        		generate(Color.YELLOW, event.getX(), event.getY(), dirx, diry,10.0, 1.01, true);
+        	
+        	
+        	
+        	
+        	}
+        	
+>>>>>>> 09f2430d6deaa309cd2e553f6afcd187fca7ce84
         	
         });
         	
@@ -85,18 +124,30 @@ public class Feuerwerk extends Application {
             	
                 for(MovingEllipse e:ovals){
                 	
-                	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+25 > scene.getHeight()){
-                		e.setStepY(e.getStepY()*(-1));            		
+                	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 > scene.getHeight()){
+                		e.setStepY(e.getStepY()/e.getGravity()*(-1));
                 	}else if(e.getEllipse().getCenterX()+e.getEllipse().getRadiusX() > scene.getWidth() ){
                 		e.setStepX(e.getStepX()*(-1)); 
                 	}else if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<0){
                 		e.setStepY(e.getStepY()*(-1));
                 	}else if(e.getEllipse().getCenterX()-e.getEllipse().getRadiusX()<0){
                 		e.setStepX(e.getStepX()*(-1));
+                	}else{
+                		e.setStepY(e.getStepY()*e.getGravity());	
+                	}
+                	
+                	if(e.getStepY()==0){
+                		try {
+							Thread.sleep(2000);
+							
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                 	}
                 	
                 	e.getEllipse().setCenterX((e.getEllipse().getCenterX()+e.getStepX()));
-                	e.getEllipse().setCenterY((e.getEllipse().getCenterY()+e.getStepY())+e.getGravity()); 
+                	e.getEllipse().setCenterY((e.getEllipse().getCenterY()+e.getStepY())); 
                 }
                 try {
                     Thread.sleep(10);
@@ -106,24 +157,24 @@ public class Feuerwerk extends Application {
         }.start();
     }
     
-    private void generate(Color c, Double x, Double y, Double radius,double grav, boolean clickable){
+    private void generate(Color c, Double x, Double y,Double dirx,Double diry,Double radius,double grav, boolean clickable){
                         Ellipse localCircle = new Ellipse(x, y, radius, radius);
                         localCircle.setStrokeWidth(3);
                         localCircle.setStroke(Color.BLACK);
                         localCircle.setFill(c);
-                        if(clickable){  //add event handler
+                        /**if(clickable){  //add event handler
                             localCircle.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent e) { //create one more moving circle
-                                    generate(Color.YELLOW, e.getSceneX(), e.getSceneY() - bt.getHeight(), 10.0, grav ,false);
+                                    generate(Color.YELLOW, e.getSceneX(), e.getSceneY() - bt.getHeight(),dirx,diry, 10.0, grav ,false);
                                 }
                             });
-                        }
-                        ovals.add(new MovingEllipse(localCircle, random.nextDouble(), random.nextDouble(),grav));
+                        }**/
+                        ovals.add(new MovingEllipse(localCircle, dirx, diry,grav));
                         group.getChildren().add(localCircle); //add obect to the group
         
     }
-    private void generatef(Color c, Double x, Double y, Double radius, boolean clickable){
+/**    private void generatef(Color c, Double x, Double y, Double radius, boolean clickable){
         Ellipse localCircle = new Ellipse(x, y, radius, radius);
         localCircle.setStrokeWidth(1);
         localCircle.setStroke(Color.BLACK);
@@ -139,7 +190,7 @@ public class Feuerwerk extends Application {
         ovals.add(new MovingEllipse(localCircle, random.nextDouble(), random.nextDouble()));
         group.getChildren().add(localCircle); //add obect to the group
 
-}
+}**/
     private class MovingEllipse{
         private double stepX; //
         private double stepY;

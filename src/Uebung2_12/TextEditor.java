@@ -73,6 +73,7 @@ public class TextEditor extends Application {
 		    }	
 		    });
 	        
+
 	        menuClose.showingProperty().addListener((observable, oldValue, newValue) -> {
 			    	if (observable.getValue()) {
 			    	System.exit(0);
@@ -95,6 +96,7 @@ public class TextEditor extends Application {
 			    }
 			        	
 			    });
+
 	        
 	        menuFileItemNew.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
 	        menuFileItemSaveAs.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
@@ -130,6 +132,8 @@ public class TextEditor extends Application {
 		System.out.println("Datei Öffnen");
 	}
 	
+	private int leng = 0;
+	
 	private void popupSearch(){
 		Stage pop = new Stage();
 		pop.initModality(Modality.APPLICATION_MODAL);
@@ -154,31 +158,28 @@ public class TextEditor extends Application {
 		pop.setScene(scene2);
 		pop.show();
 		
+		
 		sbutton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
 				//String text=ta.replaceSelection(replacement);
 				String text=ta.getText();
 				String such=search.getText();
-				String suche = "" + such.charAt(0);
-				String suchen = "";
-				for (int i = 1; i<such.length();i++){
-					suchen = suchen + such.charAt(i);
-				}
-				System.out.println(such.charAt(0)+suchen);
+				
+				
 				if(lowCase.isSelected()==true){
-					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
+					ta.selectRange(text.indexOf(such, leng),such.length()+text.indexOf(such, leng));
+					leng = leng + such.length()+text.indexOf(such);
 				}else{
 					text = text.toLowerCase();
 					such = such.toLowerCase();
-					ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
-					//ta.selectRange(text.indexOf(such),such.length()+text.indexOf(such));
-					//ta.selectRange(text.indexOf(such.toLowerCase()),such.length()+text.indexOf(such));
-					//ta.selectRange(text.indexOf(such.toUpperCase()),such.length()+text.indexOf(such));
-					//ta.selectRange(text.indexOf(suche.toLowerCase()+suchen),such.length()+text.indexOf(suche.toLowerCase()+suchen));
-					//ta.selectRange(text.indexOf(suche.toUpperCase()+suchen),such.length()+text.indexOf(suche.toUpperCase()+suchen));
+					ta.selectRange(text.indexOf(such, leng),such.length()+text.indexOf(such, leng));
+					leng = leng + such.length()+text.indexOf(such);
 				}
 				
+				if(leng>=text.length()){
+					leng = 0;
+				}
 			}
 		});
 		

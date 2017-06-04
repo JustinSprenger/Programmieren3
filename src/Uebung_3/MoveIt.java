@@ -80,7 +80,7 @@ public class MoveIt extends Application {
             	
                 for(MovingEllipse e:ovals){
                 	
-                	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+25 > scene.getHeight()){
+                	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 > scene.getHeight()){
                 		e.setStepY(e.getStepY()*(-1));            		
                 	}else if(e.getEllipse().getCenterX()+e.getEllipse().getRadiusX() > scene.getWidth() ){
                 		e.setStepX(e.getStepX()*(-1)); 
