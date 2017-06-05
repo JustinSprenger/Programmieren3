@@ -73,15 +73,13 @@ public class Feuerwerk extends Application {
                 pane.setPrefHeight(scene.getHeight());
             }
         });
-<<<<<<< HEAD
-        pane.onMousePressedProperty((new event)->{
-=======
+
         pane.setOnMousePressed(event->
         { 
         	int r;
         	double dirx=0,diry=0;
         	for(int i = 0;i<=1000;i++){
-        		r = i%4;
+        		r = i%8;
         		System.out.println(r);
         		switch (r) {
 				case 0:
@@ -100,20 +98,36 @@ public class Feuerwerk extends Application {
 					dirx=Math.random()*-1;
 					diry=Math.random();
 					break;
-
+				case 4:
+					dirx=Math.random()*1.5;
+					diry=Math.random();
+					break;
+				case 5:
+					dirx=Math.random();
+					diry=Math.random()*1.5;
+					break;
+				case 6:
+					dirx=Math.random()*-1.5;
+					diry=Math.random();
+					break;
+				case 7:
+					dirx=Math.random();
+					diry=Math.random()*-1.5;
+					break;
 				default:
 					break;
 				}
-        		
-        		generate(Color.YELLOW, event.getX(), event.getY(), dirx, diry,10.0, 1.01, true);
-        	
-        	
-        	
-        	
-        	}
-        	
->>>>>>> 09f2430d6deaa309cd2e553f6afcd187fca7ce84
-        	
+        		if(i<=250&&i>0){
+        			generate(Color.YELLOW, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
+        		}else if(i<=500&&i>250){
+        			generate(Color.GREEN, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
+        		}else if(i<=750&&i>500){
+        			generate(Color.RED, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
+        		}else if(i<=1000&&i>750){
+        			generate(Color.PURPLE, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
+        		}
+        		     	
+        	}        		
         });
         	
         primaryStage.show();
@@ -124,21 +138,30 @@ public class Feuerwerk extends Application {
             	
                 for(MovingEllipse e:ovals){
                 	
-                	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 > scene.getHeight()){
-                		e.setStepY(e.getStepY()/e.getGravity()*(-1));
-                	}else if(e.getEllipse().getCenterX()+e.getEllipse().getRadiusX() > scene.getWidth() ){
-                		e.setStepX(e.getStepX()*(-1)); 
-                	}else if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<0){
+                	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 >= scene.getHeight()){
                 		e.setStepY(e.getStepY()*(-1));
-                	}else if(e.getEllipse().getCenterX()-e.getEllipse().getRadiusX()<0){
+                	}else if(e.getEllipse().getCenterX()+e.getEllipse().getRadiusX() >= scene.getWidth() ){
+                		e.setStepX(e.getStepX()*(-1)); 
+                	}else if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<=0){
+                		e.setStepY(e.getStepY()*(-1));
+                	}else if(e.getEllipse().getCenterX()-e.getEllipse().getRadiusX()<=0){
                 		e.setStepX(e.getStepX()*(-1));
-                	}else{
-                		e.setStepY(e.getStepY()*e.getGravity());	
+                	}else if(e.getEllipse().getCenterX()+e.getEllipse().getRadiusX()>=scene.getWidth()){
+                		e.setStepX(e.getStepX()*(-1));
+                	}else if(e.getStepY() == 0){
+                		e.setStepX(0);
+                	}else if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 < scene.getHeight()&&e.getEllipse().getCenterX()+e.getEllipse().getRadiusX()<scene.getWidth()-10&&e.getEllipse().getCenterX()-e.getEllipse().getRadiusX()>10){
+                		if(e.getStepY()>0){
+                			e.setStepY(e.getStepY()+e.getGravity());
+                		}else if(e.getStepY()<0){
+                			e.setStepY(e.getStepY()+e.getGravity()*(Math.random()*10));
+                		}	
                 	}
                 	
-                	if(e.getStepY()==0){
+                	if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<=30){
                 		try {
-							Thread.sleep(2000);
+							Thread.sleep(2);
+							((borderPane).getChildren()).remove(e);
 							
 						} catch (InterruptedException e1) {
 							// TODO Auto-generated catch block
