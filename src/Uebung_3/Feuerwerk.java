@@ -139,6 +139,14 @@ public class Feuerwerk extends Application {
                 for(MovingEllipse e:ovals){
                 	
                 	if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 >= scene.getHeight()){
+                		
+                		if(e.getStepY() < 0.2){
+                			group.getChildren().remove(e.getEllipse());
+                			
+                			System.out.println(group.getChildren().size());
+           
+                		}
+                		
                 		e.setStepY(e.getStepY()*(-1));
                 	}else if(e.getEllipse().getCenterX()+e.getEllipse().getRadiusX() >= scene.getWidth() ){
                 		e.setStepX(e.getStepX()*(-1)); 
@@ -150,6 +158,7 @@ public class Feuerwerk extends Application {
                 		e.setStepX(e.getStepX()*(-1));
                 	}else if(e.getStepY() == 0){
                 		e.setStepX(0);
+            
                 	}else if(e.getEllipse().getCenterY()+e.getEllipse().getRadiusY()+30 < scene.getHeight()&&e.getEllipse().getCenterX()+e.getEllipse().getRadiusX()<scene.getWidth()-10&&e.getEllipse().getCenterX()-e.getEllipse().getRadiusX()>10){
                 		if(e.getStepY()>0){
                 			e.setStepY(e.getStepY()+e.getGravity());
@@ -158,7 +167,7 @@ public class Feuerwerk extends Application {
                 		}	
                 	}
                 	
-                	if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<=30){
+                	/**if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<=30){
                 		try {
 							Thread.sleep(2);
 							((borderPane).getChildren()).remove(e);
@@ -167,7 +176,7 @@ public class Feuerwerk extends Application {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-                	}
+                	}**/
                 	
                 	e.getEllipse().setCenterX((e.getEllipse().getCenterX()+e.getStepX()));
                 	e.getEllipse().setCenterY((e.getEllipse().getCenterY()+e.getStepY())); 
