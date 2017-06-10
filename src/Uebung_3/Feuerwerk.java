@@ -78,7 +78,7 @@ public class Feuerwerk extends Application {
         { 
         	int r;
         	double dirx=0,diry=0;
-        	for(int i = 0;i<=1000;i++){
+        	for(int i = 0;i<=100;i++){
         		r = i%8;
         		System.out.println(r);
         		switch (r) {
@@ -117,13 +117,13 @@ public class Feuerwerk extends Application {
 				default:
 					break;
 				}
-        		if(i<=250&&i>0){
+        		if(i<=25&&i>0){
         			generate(Color.YELLOW, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
-        		}else if(i<=500&&i>250){
+        		}else if(i<=50&&i>25){
         			generate(Color.GREEN, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
-        		}else if(i<=750&&i>500){
+        		}else if(i<=75&&i>50){
         			generate(Color.RED, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
-        		}else if(i<=1000&&i>750){
+        		}else if(i<=100&&i>75){
         			generate(Color.PURPLE, event.getX(), event.getY(), dirx, diry,5.0, 0.01, true);
         		}
         		     	
@@ -158,7 +158,7 @@ public class Feuerwerk extends Application {
                 		}	
                 	}
                 	
-                	if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<=30){
+                	/**if(e.getEllipse().getCenterY()-e.getEllipse().getRadiusY()<=30){
                 		try {
 							Thread.sleep(2);
 							((borderPane).getChildren()).remove(e);
@@ -167,7 +167,7 @@ public class Feuerwerk extends Application {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-                	}
+                	}**/
                 	
                 	e.getEllipse().setCenterX((e.getEllipse().getCenterX()+e.getStepX()));
                 	e.getEllipse().setCenterY((e.getEllipse().getCenterY()+e.getStepY())); 
