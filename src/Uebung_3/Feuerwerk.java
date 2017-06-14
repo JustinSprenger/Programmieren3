@@ -49,8 +49,8 @@ public class Feuerwerk extends Application {
         bt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-            	//ovals.clear();              //clear List with references
-               // group.getChildren().clear();//clear all moving objects  
+            	ovals.clear();              //clear List with references
+            	group.getChildren().clear();//clear all moving objects  
                // generate(Color.RED, 100.0, 100.0, 35.0, true); //the new first moving circle
             }
         });
