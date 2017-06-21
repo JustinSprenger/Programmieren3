@@ -4,6 +4,9 @@ package Uebung_3;
  * Created by user on 31.03.16.
  */
 import java.util.Random;
+
+
+
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
@@ -24,11 +27,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import sun.applet.resources.MsgAppletViewer_sv;
 
 public class Arkanoid extends Application {
 
 	private List<MovingEllipse> ovals = new ArrayList<MovingEllipse>();
 	private List<Rectangle> rectengles = new ArrayList<Rectangle>();
+	private Ellipse ball = new Ellipse();
+	private MovingEllipse ov = new MovingEllipse(ball, -4, -4);
 	private Rectangle cursor = new Rectangle();
 	private Group group = new Group(); // root node for the play window
 	private final Random random = new Random();
@@ -73,6 +79,7 @@ public class Arkanoid extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				ovals.clear(); // clear List with references
+				rectengles.clear();
 				group.getChildren().clear();// clear all moving objects
 				// generate(Color.RED, 100.0, 100.0, 35.0, true); //the new
 				// first moving circle
@@ -82,11 +89,11 @@ public class Arkanoid extends Application {
 					}
 				}
 				generatecursor(Color.BLACK, scene);
-				generate(Color.YELLOW, cursor.getX()+ cursor.getWidth()/2 , cursor.getY()-cursor.getHeight()-10.0 , 10.0, false);
+				generate(Color.YELLOW,scene);
 			}
 		});
 		generatecursor(Color.BLACK, scene);
-		generate(Color.YELLOW, cursor.getX()+ cursor.getWidth()/2 , cursor.getY()-cursor.getHeight()-10.0 , 10.0, false);
+		generate(Color.YELLOW, scene);
 		// set pane autoresisable
 		scene.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -112,24 +119,24 @@ public class Arkanoid extends Application {
 			@Override
 			public void handle(long now) {
 
-				for (MovingEllipse e : ovals) {
+			
 
-					if (e.getEllipse().getCenterY() + e.getEllipse().getRadiusY() + 30 > scene.getHeight()) {
-						e.setStepY(e.getStepY() * (-1));
-					} else if (e.getEllipse().getCenterX() + e.getEllipse().getRadiusX() > scene.getWidth()) {
-						e.setStepX(e.getStepX() * (-1));
-					} else if (e.getEllipse().getCenterY() - e.getEllipse().getRadiusY() < 0) {
-						e.setStepY(e.getStepY() * (-1));
-					} else if (e.getEllipse().getCenterX() - e.getEllipse().getRadiusX() < 0) {
-						e.setStepX(e.getStepX() * (-1));
+					if (ov.getEllipse().getCenterY() + ov.getEllipse().getRadiusY() + 30 > scene.getHeight()) {
+						ov.setStepY(ov.getStepY() * (-1));
+					} else if (ov.getEllipse().getCenterX() + ov.getEllipse().getRadiusX() > scene.getWidth()) {
+						ov.setStepX(ov.getStepX() * (-1));
+					} else if (ov.getEllipse().getCenterY() - ov.getEllipse().getRadiusY() < 0) {
+						ov.setStepY(ov.getStepY() * (-1));
+					} else if (ov.getEllipse().getCenterX() - ov.getEllipse().getRadiusX() < 0) {
+						ov.setStepX(ov.getStepX() * (-1));
+					} else if (ov.getEllipse().getCenterY()+ov.getEllipse().getRadiusX()>=cursor.getY()&&ov.getEllipse().getCenterX()>=cursor.getX()&&ov.getEllipse().getCenterX()<=cursor.getX()+cursor.getWidth()){
+						ov.setStepY(ov.getStepY()*(-1));
 					}
 					
 					
-					
-					
-					e.getEllipse().setCenterX(e.getEllipse().getCenterX() + e.getStepX());
-					e.getEllipse().setCenterY(e.getEllipse().getCenterY() + e.getStepY());
-				}
+					ov.getEllipse().setCenterX(ov.getEllipse().getCenterX() + ov.getStepX());
+					ov.getEllipse().setCenterY(ov.getEllipse().getCenterY() + ov.getStepY());
+				
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
@@ -141,9 +148,49 @@ public class Arkanoid extends Application {
 		new AnimationTimer() { // animate all recs
 			@Override
 			public void handle(long now) {
-				
-			}
-		}.start();
+				double ballY,ballX,ballYw,ballXw,blockY,blockX;
+				for(Rectangle e : rectengles){
+                	ballY = ov.getEllipse().getCenterY()-ov.getEllipse().getRadiusY();
+                	ballYw = ov.getEllipse().getCenterY()+ov.getEllipse().getRadiusY();
+                	ballX = ov.getEllipse().getCenterX()-ov.getEllipse().getRadiusX();
+                	ballXw = ov.getEllipse().getCenterX()+ov.getEllipse().getRadiusX();
+                	blockY = e.getY();
+                	blockX = e.getX();
+                	
+                	if(ballY <= blockY + e.getHeight()&&ballYw>=blockY){
+                		if(ballX<=blockX+e.getWidth()&&ballXw>=blockX){
+                			ov.setStepY(ov.getStepY()*(-1));
+                			try {
+								rectengles.remove(e);
+							} catch (Exception e2) {
+								
+							}
+                			group.getChildren().remove(e);
+                		}	 
+                	}else if(ballX<=blockX+e.getWidth()&&ballXw>=blockX){
+                		if(ballY <= blockY + e.getHeight()&&ballYw>=blockY){
+                			ov.setStepX(ov.getStepX()*(-1));
+                			try {
+								rectengles.remove(e);
+							} catch (Exception e2) {
+								
+							}
+                			group.getChildren().remove(e);
+                		}
+                	}
+                	if(rectengles.isEmpty()==true){
+                		ovals.clear();
+                		group.getChildren().clear();
+                	}else{
+                		System.out.println(rectengles.size());
+                	}
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                }
+            }
+			}.start();
 		
 		
 		new AnimationTimer() { // animate all recs
@@ -181,23 +228,17 @@ public class Arkanoid extends Application {
 	}
 	
 
-	private void generate(Color c, Double x, Double y, Double radius, boolean clickable) {
-		Ellipse localCircle = new Ellipse(x, y, radius, radius);
-		localCircle.setStrokeWidth(3);
-		localCircle.setStroke(Color.BLACK);
-		localCircle.setFill(c);
-		if (clickable) { // add event handler
-			localCircle.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) { // create one more moving
-													// circle
-					generate(Color.YELLOW, e.getSceneX(), e.getSceneY() - bt.getHeight(), 10.0, false);
-				}
-			});
-		}
-		ovals.add(new MovingEllipse(localCircle, -5, -5));
-		group.getChildren().add(localCircle); // add obect to the group
-
+	private void generate(Color c, Scene scene) {
+		
+		ov.getEllipse().setCenterX(((scene.getWidth()-(scene.getWidth()/10))/2));
+		ov.getEllipse().setCenterY(scene.getHeight()-80);
+		ov.getEllipse().setRadiusX(10);
+		ov.getEllipse().setRadiusY(10);
+		ov.getEllipse().setStroke(Color.BLACK);
+		ov.getEllipse().setStrokeWidth(3);
+		ov.getEllipse().setFill(Color.YELLOW);
+		group.getChildren().add(ov.getEllipse());
+		
 	}
 	
 	private void generateRectangle(Color c, Double x, Double y, Double width, Double heigth) {
@@ -205,6 +246,7 @@ public class Arkanoid extends Application {
 		block.setStrokeWidth(3);
 		block.setStroke(Color.BLACK);
 		block.setFill(c);
+		rectengles.add(block);
 		group.getChildren().add(block);
 	}
 	
