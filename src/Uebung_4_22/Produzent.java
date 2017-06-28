@@ -1,12 +1,12 @@
-package Uebung_4_21;
+package Uebung_4_22;
 
 import java.util.Random;
 import java.util.Vector;
 
-public class Produzent extends Thread{
+public class Produzent implements Runnable {
 	Vector zahlen;
 	Random random = new Random();
-	private volatile boolean stop = false;
+	private boolean stop = false;
 	
 	Produzent(Vector a){
 		this.zahlen = a;
@@ -16,17 +16,17 @@ public class Produzent extends Thread{
 	public void run() {
 		int zahl = 0;
 		try {
-			while(true) {
-				synchronized (this) {
+			synchronized (this) {
+				while(true) {
+					
 					while (stop) {
 						wait();
 					}
+					zahl = 1 + random.nextInt(59);
+					zahlen.add(zahl);
+					System.out.println(zahl + "     -Produzent");
+					Thread.sleep(2000);
 				}
-				zahl = 1 + random.nextInt(59);
-				zahlen.add(zahl);
-				System.out.println(zahl + "     -Produzent");
-				Thread.sleep(2000);
-				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,6 +39,6 @@ public class Produzent extends Thread{
 
 	public void consume() {
 		this.stop = false;
-		notify();
+		this.notify();
 	}
 }

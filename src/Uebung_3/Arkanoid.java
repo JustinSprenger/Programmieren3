@@ -122,7 +122,7 @@ public class Arkanoid extends Application {
 			
 
 					if (ov.getEllipse().getCenterY() + ov.getEllipse().getRadiusY() + 30 > scene.getHeight()) {
-						ov.setStepY(ov.getStepY() * (-1));
+						//ov.setStepY(ov.getStepY() * (-1));
 					} else if (ov.getEllipse().getCenterX() + ov.getEllipse().getRadiusX() > scene.getWidth()) {
 						ov.setStepX(ov.getStepX() * (-1));
 					} else if (ov.getEllipse().getCenterY() - ov.getEllipse().getRadiusY() < 0) {
