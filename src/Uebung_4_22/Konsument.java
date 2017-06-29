@@ -1,14 +1,16 @@
 package Uebung_4_22;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class Konsument implements Runnable {
-	Vector zahlen;
+public class Konsument extends Thread {
+	Pipe pipe;
 	
 
-	Konsument(Vector a) {
-		this.zahlen = a;
+	Konsument(Pipe p) {
+		this.pipe = p;
 	}
 
 	@Override
@@ -16,28 +18,22 @@ public class Konsument implements Runnable {
 		int zahl = 0;
 
 		try {
+			
 			while (true) {
-				synchronized (this) {
-
-					
-					if(zahlen.size()>0){
-						String stern ="";
-						zahl = (int) zahlen.get(0);
-						zahlen.removeElementAt(0);
-						
-						for (int i = 0; i < zahl; i++) {
-							stern = stern + "*";
-						}
-						System.out.println(stern);
-						System.out.println();
-					}
-				}
+				
+				String stern ="";
+				zahl = pipe.readOut();
+				for(int i = 0;i<zahl;i++){
+					stern = stern + "*";
+				}						
+				System.out.println(stern);
+				System.out.println();
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (InterruptedException e) {
+		} catch (EOFException e) {
+		} catch (IOException e) {
+			System.err.println(e);
 		}
-
 	}
-
-	
 }

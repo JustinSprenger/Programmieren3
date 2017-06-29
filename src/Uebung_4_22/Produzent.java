@@ -1,37 +1,36 @@
 package Uebung_4_22;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class Produzent implements Runnable {
-	Vector zahlen;
+public class Produzent extends Thread {
+	Pipe pipe;
 	Random random = new Random();
 	private boolean stop = false;
 	
-	Produzent(Vector a){
-		this.zahlen = a;
+	Produzent(Pipe p){
+		this.pipe = p;
 	}
 	
 	@Override
 	public void run() {
 		int zahl = 0;
 		try {
-			synchronized (this) {
 				while(true) {
-					
 					while (stop) {
 						wait();
 					}
 					zahl = 1 + random.nextInt(59);
-					zahlen.add(zahl);
+					pipe.writeIn(zahl);
 					System.out.println(zahl + "     -Produzent");
 					Thread.sleep(2000);
 				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+				
+		} catch (InterruptedException e) {
+		} catch (IOException e) {
+			System.err.println(e);
+		}	
 	}
 	public void pause() {
 		this.stop = true;

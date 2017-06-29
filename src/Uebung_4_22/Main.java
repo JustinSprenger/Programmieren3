@@ -6,19 +6,13 @@ import java.util.Vector;
 public class Main {
 
 	public static void main(String[] args) {
-		Vector<Integer> l1 = new Vector<>();
 		
-		Produzent p1 = new Produzent(l1);
-		Thread p = new Thread(p1);
-		
-		
-		
+		Pipe pipe = new Pipe();
+		Produzent p = new Produzent();
+		Konsument k = new Konsument();
 		p.start();
-		
-		Konsument k1 = new Konsument(l1);
-		Thread k = new Thread(k1);
-		
 		k.start();
+		
 		try {
 			
 		boolean w = true;
@@ -33,11 +27,11 @@ public class Main {
 				System.out.println("gestopt");
 			break;
 			case 'c':
-				p1.consume();
+				p.consume();
 				System.out.println("weiter");
 			break;
 			case 'p':
-				p1.pause();
+				p.pause();
 				System.out.println("pause");
 			break;
 
