@@ -30,7 +30,6 @@ public class Konsument extends Thread {
 				System.out.println();
 				
 			}
-		} catch (InterruptedException e) {
 		} catch (EOFException e) {
 		} catch (IOException e) {
 			System.err.println(e);

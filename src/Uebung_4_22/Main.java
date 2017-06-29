@@ -6,14 +6,14 @@ import java.util.Vector;
 public class Main {
 
 	public static void main(String[] args) {
-		
+		try {
 		Pipe pipe = new Pipe();
-		Produzent p = new Produzent();
-		Konsument k = new Konsument();
+		Produzent p = new Produzent(pipe);
+		Konsument k = new Konsument(pipe);
 		p.start();
 		k.start();
 		
-		try {
+		
 			
 		boolean w = true;
 		int buf;
