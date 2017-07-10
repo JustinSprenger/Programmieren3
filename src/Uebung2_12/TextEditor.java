@@ -148,6 +148,7 @@ public class TextEditor extends Application {
 		FlowPane flpane = new FlowPane();
 		FlowPane flpane2 = new FlowPane();
 		VBox vbox = new VBox(1);
+		vbox.setPrefHeight(400);
 		//flpane.set(search, Priority.ALWAYS);
 		flpane.getChildren().addAll(search,sbutton);
 		flpane2.getChildren().addAll(replace,ebutton);
