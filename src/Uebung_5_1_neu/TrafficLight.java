@@ -37,25 +37,21 @@ public class TrafficLight extends Application {
 		Button redbtn = new Button("red");
 		Button greenbtn = new Button("green");
 		Button blinkbtn = new Button("blink");
-		Button auto = new Button("auto");
 		final BorderPane borderPane; 
         final Scene scene;
         final Pane pane;
 		primaryStage.setTitle("Ellipse & AnimationTimer Example");        
-	       
-	        //create a pane for a group with all moving objects
+	   
 	    	pane = new Pane(group); 
 	        pane.setPrefSize(500,500);
 	        pane.setStyle("-fx-background-color: white;");
-	        //create a restart button
 	        
-	        //create the main window lauout
 	        borderPane = new BorderPane();
 	        
 	        HBox hbox = new HBox(4.0);
 	        
 	        hbox.setAlignment(Pos.BOTTOM_CENTER);
-	        hbox.getChildren().addAll(greenbtn,redbtn,blinkbtn,auto);	        	  
+	        hbox.getChildren().addAll(greenbtn,redbtn,blinkbtn);	        	  
 	        
 	        BorderPane.setAlignment(pane, Pos.CENTER);
 	        borderPane.setCenter(pane);
@@ -100,12 +96,7 @@ public class TrafficLight extends Application {
 	        blinkbtn.setOnAction((event)-> {
 				b.run();
 			});
-	        auto.setOnAction((event)-> {
-				while(true){
-					g.run();
-					r.run();
-				}
-			});
+	     
 		
 	}
 	public void setGreen(boolean c){
@@ -130,8 +121,6 @@ public class TrafficLight extends Application {
     		yellow.setFill(Color.BLACK);
     	}
     }
-    
-    
     
     public Ellipse getGreen(){
 		return green;

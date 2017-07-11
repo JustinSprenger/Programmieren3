@@ -21,7 +21,7 @@ public class GreenThread implements Runnable {
 				synchronized (this) {
 					//traffic.yellow.setFill(Color.YELLOW);	
 					traffic.setYellow(true);
-					System.out.println("set yellow");
+					//System.out.println("set yellow");
 	
 				}
 				try {
