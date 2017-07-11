@@ -10,19 +10,19 @@ public class Encrypt
 {
 	public static void main(String[] args) throws IOException
 	{
-		byte[] key = "klar2.txt".getBytes();
-		String inFile = "klar2.txt";
-		String outFile = "klar3.txt";
+		byte[] key = "key.txt".getBytes();
+		String inFile = "coded.txt";
+		String outFile = "encoded.txt";
 		
 		try (BufferedInputStream in = new BufferedInputStream(
 				new FileInputStream(inFile));
 				EncryptOutputStream out = new EncryptOutputStream(
 						new BufferedOutputStream(new FileOutputStream(outFile)),key))
-{
-	int n;
-	byte[] b = new byte[1024];
-	while ((n= in.read(b)) != -1)
-	{
+		{
+			int n;
+			byte[] b = new byte[1024];
+			while ((n= in.read(b)) != -1)
+		{
 		out.write(b, 0, n);
 		
 	}

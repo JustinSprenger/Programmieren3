@@ -10,16 +10,16 @@ public class TimeServer {
 	{
 		try
 		{
-			int port = Integer.parseInt("2222");//Portnummer
+			int port = Integer.parseInt("3000");
 			
-			ServerSocket server = new ServerSocket(port);//server socket
-			System.out.println("Server sollte laufen");//Statusmeldung
-			Socket s = server.accept();//Client verbindung akzeptieren
-			new TimeProtokoll(s).transact();
+			ServerSocket server = new ServerSocket(port);
+			System.out.println("Server gestartet");
+			Socket s = server.accept();
+			new TimeStamp(s).transfer();
 		}
-		catch(ArrayIndexOutOfBoundsException ae)
+		catch(ArrayIndexOutOfBoundsException e)
 		{
-			System.out.println("Aufruf: javaTimeServer <Port-Nr>");
+			e.printStackTrace();
 		}
 		catch(IOException e)
 		{

@@ -58,10 +58,10 @@ public class Piechart extends Application {
 				slice2.setPieValue(100-newValue.doubleValue());
 				slice1.setPieValue(newValue.doubleValue());
 				slice3.setPieValue(0);
-				slice1.setName("Parameter 1" + Math.round(100-(slice2.getPieValue()+slice3.getPieValue())));
+				//slice1.setName("Parameter 1" + Math.round(100-(slice2.getPieValue()+slice3.getPieValue())));
 				
 			}else{
-				slice1.setName("Parameter 1" + Math.round(newValue.doubleValue()));
+				//slice1.setName("Parameter 1" + Math.round(newValue.doubleValue()));
 				slice3.setPieValue(100-(newValue.doubleValue()+slice2.getPieValue()));
 				
 			}

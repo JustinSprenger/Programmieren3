@@ -14,13 +14,13 @@ public class Decrypt
 	{
 		
 		
-		byte[] key = "klar1.txt".getBytes();
-		String inFile = "klar1.txt";
-		String outFile = "klar2.txt";
+		byte[] key = "key.txt".getBytes();
+		String inFile = "klar.txt";
+		String outFile = "coded.txt";
 		
-		try(DecryptInputStream in = new DecryptInputStream(
-				new BufferedInputStream(new FileInputStream(inFile)),key);
-				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFile)))
+		try(DecryptInputStream in = new DecryptInputStream(new BufferedInputStream(new FileInputStream(inFile)),key);
+				
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFile)))
 		{
 			int n;
 			byte[] b = new byte [1024];
