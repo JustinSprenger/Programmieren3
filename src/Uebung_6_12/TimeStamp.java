@@ -7,7 +7,7 @@ import java.text.*;
 
 public class TimeStamp 
 {
-	static SimpleDateFormat time = new SimpleDateFormat("Es ist aktuell: ");
+	static SimpleDateFormat timee = new SimpleDateFormat("'Es ist aktuell: 'H'.'mm' Uhr'");
 	
 	Socket sock;
 	BufferedReader br;
@@ -23,6 +23,7 @@ public class TimeStamp
 			}
 		catch (IOException e)
 		{
+			System.out.println("IO");
 			e.printStackTrace();
 		}	
 	}
@@ -30,10 +31,20 @@ public class TimeStamp
 	{
 		try
 		{
-			pr.println("Enter drücken!");
+			pr.println("time eingeben!");
 			String eingabe = br.readLine();
 			Date systemtime = new Date();
-			pr.println(time.format(systemtime));
+			
+			if(eingabe.equalsIgnoreCase("time"))
+			{
+				pr.println(timee.format(systemtime));
+			}
+			else
+			{
+				pr.println(eingabe +" Fehler! ");
+				sock.close();
+			}
+			
 			}
 			catch(IOException e)
 			{

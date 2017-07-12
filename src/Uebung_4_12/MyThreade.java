@@ -9,12 +9,15 @@ public class MyThreade extends Thread {
 	
 	public void run(){
 		int j = 0;
+		double zw = 0;
 		do{
-			synchronized (getClass()) {
-				k.additionBetrag(Math.random());
-				i++;
-				j++;
+			double random = Math.random();
+			synchronized (k) {
+				k.additionBetrag(random);
 			}
+			zw = zw + random;
+			i++;
+			j++;
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
@@ -22,7 +25,7 @@ public class MyThreade extends Thread {
 			e.printStackTrace();
 		}
 		}while(j != 20);
-		System.out.println(i);
+		System.out.println("2.Thread: "+zw);
 	}
 	public int anzahl(){
 		return i;

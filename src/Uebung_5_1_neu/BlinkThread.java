@@ -14,6 +14,8 @@ public class BlinkThread extends Thread {
 		while (stop == false) {
 
 			synchronized (traffic) {
+				traffic.setRed(false);
+				traffic.setGreen(false);
 				if (traffic.getYellow().isVisible() == true) {
 					synchronized (traffic.getYellow()) {
 						traffic.setYellow(false);

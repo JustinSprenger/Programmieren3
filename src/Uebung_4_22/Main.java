@@ -10,8 +10,10 @@ public class Main {
 		Pipe pipe = new Pipe();
 		Produzent p = new Produzent(pipe);
 		Konsument k = new Konsument(pipe);
+		
+		Thread kons = new Thread(k);
 		p.start();
-		k.start();
+		kons.start();
 		
 		
 			
@@ -22,17 +24,20 @@ public class Main {
 			buf = System.in.read();
 			switch (buf) {
 			case 's':
-				p.stop();
-				k.stop();
+				p.interrupt();
 				System.out.println("gestopt");
 			break;
 			case 'c':
-				p.consume();
-				System.out.println("weiter");
+				synchronized(p){
+					p.consume();
+					System.out.println("weiter");	
+				}
 			break;
 			case 'p':
-				p.pause();
-				System.out.println("pause");
+				synchronized(p){
+					p.pause();
+					System.out.println("pause");
+				}
 			break;
 
 			default:

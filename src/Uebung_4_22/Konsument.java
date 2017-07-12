@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
-public class Konsument extends Thread {
+public class Konsument implements Runnable {
 	Pipe pipe;
 	
 
@@ -35,4 +35,5 @@ public class Konsument extends Thread {
 			System.err.println(e);
 		}
 	}
+	
 }

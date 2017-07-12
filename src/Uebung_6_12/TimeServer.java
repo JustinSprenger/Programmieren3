@@ -8,12 +8,18 @@ public class TimeServer {
 
 	public static void main(String[] args) 
 	{
+		int port = Integer.parseInt("2222");
+		System.out.println("Server gestartet");	
+		ServerSocket server = null;
+		try {
+			server = new ServerSocket(port);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		while(true){
 		try
-		{
-			int port = Integer.parseInt("3000");
-			
-			ServerSocket server = new ServerSocket(port);
-			System.out.println("Server gestartet");
+		{	
 			Socket s = server.accept();
 			new TimeStamp(s).transfer();
 		}
@@ -25,7 +31,7 @@ public class TimeServer {
 		{
 			e.printStackTrace();
 		}
-		
+		}
 
 	}
 

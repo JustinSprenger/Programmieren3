@@ -18,9 +18,12 @@ public class Produzent extends Thread {
 		int zahl = 0;
 		try {
 				while(true) {
-					while (stop) {
-						wait();
+					synchronized (this) {
+						while (stop) {
+							wait();
+						}
 					}
+					
 					zahl = 1 + random.nextInt(59);
 					pipe.writeIn(zahl);
 					System.out.println(zahl + "     -Produzent");
@@ -38,6 +41,6 @@ public class Produzent extends Thread {
 
 	public void consume() {
 		this.stop = false;
-		this.notify();
+		notify();
 	}
 }

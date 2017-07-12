@@ -8,7 +8,6 @@ public class Main {
 		
 		e.start();
 		t.run();
-		
 	}
 
 

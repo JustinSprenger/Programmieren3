@@ -11,10 +11,9 @@ public class Main {
 		t.run();
 		
 		
-		
 		System.out.println(e.anzahl()+t.anzahl());
 		System.out.println(k.anzahl());
-		System.out.println(k.betragAusgeben());
+		System.out.println("Aktueller Kontostand: "+k.betragAusgeben());
 		
 	}
 

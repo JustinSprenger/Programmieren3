@@ -15,7 +15,8 @@ public class TimeClient
 		{
 			Inet4Address host = null;
 			hostName=host.getLocalHost().getHostAddress();
-			port = Integer.parseInt("3000");
+			hostName = "localhost";
+			port = Integer.parseInt("2222");
 			c = new Socket(hostName, port);
 			
 			BufferedReader Serverread = new BufferedReader(new InputStreamReader(c.getInputStream()));
@@ -35,14 +36,17 @@ public class TimeClient
 		catch(ArrayIndexOutOfBoundsException e)
 		{
 			e.printStackTrace();
+			System.out.println("Error1");
 		}
 		catch(UnknownHostException e)
 		{
 			e.printStackTrace();
+			System.out.println("Error2");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			System.out.println("Error3");
 		}
 	}
 

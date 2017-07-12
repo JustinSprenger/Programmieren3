@@ -7,7 +7,7 @@ public class MyThreade extends Thread {
 		do{
 			System.out.println("Hip");
 		try {
-			Thread.sleep(10);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
